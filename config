@@ -36,6 +36,8 @@ font pango:DejaVu Sans Mono 8
 # Use Mouse+$mod1 to drag floating windows to their wanted position
 floating_modifier $mod1
 
+focus_on_window_activation focus
+
 # start a terminal
 bindsym $mod1+Return exec urxvtc
 
@@ -61,9 +63,6 @@ bindsym $mod1+semicolon focus right
 # change workspaces
 bindsym $mod1+Right workspace next_on_output
 bindsym $mod1+Left workspace prev_on_output
-
-bindsym $mod2+Right focus right
-bindsym $mod2+Left focus left
 
 # move focused window
 bindsym $mod1+Shift+j move left
@@ -99,9 +98,13 @@ bindsym $mod1+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod1+a focus parent
-
 # focus the child container
-#bindsym $mod1+d focus child
+bindsym $mod1+d focus child
+
+bindsym $mod2+Right focus right
+bindsym $mod2+Left focus left
+bindsym $mod2+Up focus up
+bindsym $mod2+Down focus down
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -116,17 +119,23 @@ set $ws_code "4. code"
 #set $ws9 "9"
 #set $ws10 "10"
 
+set $secondary "DP-1-1"
+
+workspace $ws_term  output $secondary
+workspace $ws_www   output primary
+workspace $ws_mail  output primary
+workspace $ws_code  output $secondary
+
 # assignment
-assign [class="URxvt"]          workspace $ws_term
+#assign [class="URxvt"]          workspace $ws_term
 assign [class="Brave-browser"]  workspace $ws_www
 assign [class="Thunderbird"]    workspace $ws_mail
 assign [class="NeovimGtk"]      workspace $ws_code
 assign [class="Gitk"]           workspace "X. GitK"
+assign [class="zoom"]           workspace "X. Zoom"
 
-workspace $ws_term  output secondary
-workspace $ws_www   output primary
-workspace $ws_mail  output primary
-workspace $ws_code  output secondary
+for_window [class="NeovimGtk"]  focus
+for_window [class="Gitk"]       focus
 
 # switch to workspace
 bindsym $mod1+1 workspace $ws_term
@@ -139,6 +148,8 @@ bindsym $mod1+4 workspace $ws_code
 #bindsym $mod1+8 workspace $ws8
 #bindsym $mod1+9 workspace $ws9
 #bindsym $mod1+0 workspace $ws10
+
+bindsym $mod1+Shift+Return exec i3-input -F 'workspace "%s"' -P 'Switch to workspace: '
 
 # move focused container to workspace
 bindsym $mod1+Shift+1 move container to workspace $ws_term

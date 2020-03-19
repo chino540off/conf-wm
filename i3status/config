@@ -1,53 +1,79 @@
 general {
-  output_format   = "i3bar"
+  output_format       = "i3bar"
 
-  interval        = 10
+  interval            = 10
 
-  colors          = true
-  color_good      = "#CF2569"
-  color_degraded  = "#FFBF2A"
-  color_bad       = "#0C0C0C"
+  colors              = true
+  color_good          = "#CF2569"
+  color_degraded      = "#FFBF2A"
+  color_bad           = "#EE82EE"
 }
 
 order += "ipv6"
+ipv6 {
+  format_up           = "%ip"
+  format_down         = ""
+}
 
 order += "ethernet _first_"
 ethernet _first_ {
-  format_up       = "E: %ip (%speed)"
-  format_down     = "E: down"
+  format_up           = "%ip (%speed)"
+  format_down         = ""
 }
 
 order += "wireless _first_"
 wireless _first_ {
-  format_up       = "W: (%quality at %essid, %bitrate / %frequency) %ip"
-  format_down     = "W: down"
-  format_quality  = "%03d%s"
+  format_up           = "%ip (%quality at %essid)"
+  format_down         = ""
+  format_quality      = "%03d%s"
 }
 
 order += "battery 0"
 battery 0 {
-  format          = "%status %percentage %remaining %emptytime"
-  format_down     = "No battery"
-  status_chr      = "CHR"
-  status_bat      = "BAT"
-  status_unk      = "UNK"
-  status_full     = "FULL"
-  path            = "/sys/class/power_supply/BAT%d/uevent"
-  low_threshold   = 10
+  format              = "%status %percentage %remaining %emptytime"
+  format_down         = ""
+  status_chr          = "CHR"
+  status_bat          = "BAT"
+  status_unk          = "UNK"
+  status_full         = "FULL"
+  path                = "/sys/class/power_supply/BAT%d/uevent"
+  low_threshold       = 10
+}
+
+order += "cpu_usage"
+cpu_usage {
+  format              = "CPU: %usage"
+  max_threshold       = 75
+  degraded_threshold  = 25
+}
+
+order += "load"
+load {
+  format              = "Load: %1min %5min %15min"
+}
+
+order += "memory"
+memory {
+  format              = "MEM: %percentage_used"
+  threshold_degraded  = 10%
+  threshold_critical  = 5%
 }
 
 order += "disk /"
 disk "/" {
-  format          = "HDD %avail:/" 
+  format              = "/: %percentage_free"
+  low_threshold       = 15
 }
+
 order += "disk /home"
 disk "/home" {
-  format          = "HDD %avail:/home" 
+  format              = "/home: %percentage_free"
+  low_threshold       = 15
 }
 
 order += "tztime local"
 tztime local {
-  format          = "%Y-%m-%d %H:%M:%S"
+  format              = "%Y-%m-%d %H:%M:%S"
 }
 
 # vim:filetype=i3
