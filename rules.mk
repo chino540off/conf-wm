@@ -6,3 +6,8 @@ $(_m)-links = 	\
 
 $(_m)-link-.		= ~/.config/i3
 $(_m)-link-i3status	= ~/.config/i3status
+
+$(_m)-cmds =	\
+  i3		\
+  py3status	\
+  feh

@@ -9,66 +9,153 @@ general {
   color_bad           = "#EE82EE"
 }
 
-order += "ipv6"
-ipv6 {
-  format_up           = "%ip"
+order += "spotify"
+spotify {
+  dbus_client         = "org.mpris.MediaPlayer2.spotify"
+  format              = "{artist} - {title}"
   format_down         = ""
+  color_playing       = "#1DB954"
+  button_play_pause   = 1
+  button_next         = 3
 }
 
-order += "ethernet _first_"
-ethernet _first_ {
-  format_up           = "%ip (%speed)"
-  format_down         = ""
+order += bluetooth
+bluetooth {
+  format_no_conn_prefix = 'blue:'
+  format_no_conn        = 'down'
+  format_prefix         = 'blue:'
+  color_good            = '#19A7F9'
+  color_bad             = '#666A6C'
 }
 
-order += "wireless _first_"
-wireless _first_ {
-  format_up           = "%ip (%quality at %essid)"
-  format_down         = ""
-  format_quality      = "%03d%s"
+order += "frame weather"
+frame weather {
+  click_mode            = "button"
+  format                = '{button}{output}'
+  format_button_closed  = 'weather'
+  format_button_open    = 'weather '
+  format_separator      = ' '
+  open                  = false
+  weather_owm {
+      gradients         = true
+      api_key           = "e1341f9a6015bf61fa92f7a2a6fdd489"
+      city              = "Oullins"
+      unit_temperature  = "c"
+      unit_rain         = "mm"
+      unit_snow         = "mm"
+      unit_wind         = "kmh"
+      format            = "\?color=all {city} {temperature}[ {rain}], {description}"
+      thresholds        = {
+          "all": [
+            (-5, "#00FFFF"),
+            (0,  "#0000FF"),
+            (20, "#00FF00"),
+            (40, "#FFFF00"),
+          ],
+      }
+  }
 }
 
-order += "battery 0"
-battery 0 {
-  format              = "%status %percentage %remaining %emptytime"
-  format_down         = ""
-  status_chr          = "CHR"
-  status_bat          = "BAT"
-  status_unk          = "UNK"
-  status_full         = "FULL"
-  path                = "/sys/class/power_supply/BAT%d/uevent"
-  low_threshold       = 10
+order += volume_status
+volume_status {
+  thresholds = [
+    (0,   "#EE82EE"),
+    (10,  "#FF77C3"),
+    (20,  "#FF7A97"),
+    (30,  "#FF8970"),
+    (40,  "#FF9D53"),
+    (50,  "#FF9B49"),
+    (60,  "#FF983F"),
+    (70,  "#FF9633"),
+    (80,  "#FD783F"),
+    (90,  "#F45A4D"),
+    (100, "#E53E5C"),
+    (110, "#CF2569"),
+  ]
 }
 
-order += "cpu_usage"
-cpu_usage {
-  format              = "CPU: %usage"
-  max_threshold       = 75
-  degraded_threshold  = 25
+order += "frame net"
+frame net {
+  click_mode            = "button"
+  format                = '{button}{output}'
+  format_button_closed  = 'net'
+  format_button_open    = 'net '
+  format_separator      = ' '
+  open                  = false
+
+  online_status {
+      color_on          = "#1DB954"
+  }
+
+  ipv6 {
+    format_up           = "%ip"
+    format_down         = ""
+  }
+
+  ethernet _first_ {
+    format_up           = "%ip (%speed)"
+    format_down         = ""
+  }
+
+  wireless _first_ {
+    format_up           = "%ip (%quality at %essid)"
+    format_down         = ""
+    format_quality      = "%03d%s"
+  }
+
+  netdata {
+  }
 }
 
-order += "load"
-load {
-  format              = "Load: %1min %5min %15min"
+order += "frame system"
+frame system {
+  click_mode            = "button"
+  format                = '{button}{output}'
+  format_button_closed  = 'system'
+  format_button_open    = 'system '
+  format_separator      = ' '
+  open                  = false
+
+  cpu_usage {
+    format              = "cpu: %usage"
+    max_threshold       = 75
+    degraded_threshold  = 25
+  }
+
+  loadavg {
+    format              = "load: {1min} {5min} {15min}"
+  }
+
+  memory {
+    format              = "mem: %percentage_used"
+    threshold_degraded  = 10
+    threshold_critical  = 5
+  }
 }
 
-order += "memory"
-memory {
-  format              = "MEM: %percentage_used"
-  threshold_degraded  = 10%
-  threshold_critical  = 5%
+order += "frame disks"
+frame disks {
+  click_mode            = "button"
+  format                = '{button}{output}'
+  format_button_closed  = 'disk'
+  format_button_open    = 'disk '
+  format_separator      = ' '
+  open                  = false
+
+  diskdata {
+    disk                = "nvme0n1p2"
+  }
+  diskdata {
+    disk                = "nvme0n1p3"
+  }
 }
 
-order += "disk /"
-disk "/" {
-  format              = "/: %percentage_free"
-  low_threshold       = 15
-}
-
-order += "disk /home"
-disk "/home" {
-  format              = "/home: %percentage_free"
-  low_threshold       = 15
+order += "battery_level"
+battery_level {
+  format                    = "bat: {percent}%"
+  threshold_degraded        = 30
+  notification              = true
+  notify_low_level          = true
 }
 
 order += "tztime local"
