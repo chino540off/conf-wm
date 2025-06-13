@@ -11,9 +11,10 @@
 
 # Execute urxvtd for faster urxvt instances
 exec urxvtd -f
+exec pasystray
 
 # set wallpaper
-exec --no-startup-id feh --bg-fill ~/.config/i3/wallpaper.jpg
+exec --no-startup-id feh --bg-fill ~/.wallpaper
 
 set $mod1 Mod4
 set $mod2 Mod1
@@ -39,7 +40,7 @@ floating_modifier $mod1
 focus_on_window_activation focus
 
 # start a terminal
-bindsym $mod1+Return exec urxvtc
+bindsym $mod1+Return exec wezterm
 
 # kill focused window
 bindsym $mod1+Shift+c kill
@@ -145,9 +146,9 @@ for_window [class="Spotify"]    focus
 for_window [class="Gitk"]       focus
 for_window [class="VirtualBox Manager"]    focus
 for_window [class="zoom"] floating enable
-for_window [class="zoom" title="Zoom - Free Account"] floating disable
-for_window [class="zoom" title="Zoom - Licensed Account"] floating disable
-for_window [class="zoom" title="Zoom Meeting"] floating disable
+for_window [class="zoom" title="Zoom Workplace - Free account"] floating disable
+for_window [class="zoom" title="Zoom Workplace - Licensed account"] floating disable
+for_window [class="zoom" title="Meeting"] floating disable
 
 # switch to workspace
 bindsym $mod1+1 workspace $ws_term

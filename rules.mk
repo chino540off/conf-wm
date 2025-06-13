@@ -1,13 +1,16 @@
-_m = i3
+_m = wm
 
 $(_m)-links = 	\
-  .		\
-  i3status
+  i3		\
+  i3/i3status	\
+  wallpaper.jpg
 
-$(_m)-link-.		= ~/.config/i3
-$(_m)-link-i3status	= ~/.config/i3status
+$(_m)-link-i3		= ~/.config
+$(_m)-link-i3/i3status	= ~/.config
+$(_m)-link-wallpaper.jpg= ~/.wallpaper
 
 $(_m)-cmds =	\
+  lol		\
   i3		\
   py3status	\
   feh
