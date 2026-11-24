@@ -67,9 +67,9 @@ preset = 'qwerty'
 inner.horizontal = 1
 inner.vertical = 1
 outer.left = 1
-outer.top = 1
+outer.top = [{ monitor."X2483" = 21 }, { monitor."ASUS PA238" = 21 }, 5]
 outer.right = 1
-outer.bottom = [{ monitor.main = 42 }, { monitor."X2483" = 42 }, { monitor."ASUS PA238" = 44 }, 42]
+outer.bottom = [{ monitor.main = 42 }, { monitor."X2483" = 42 }, { monitor."ASUS PA238" = 42 }, 42]
 
 # See https://nikitabobko.github.io/AeroSpace/guide#exec-env-vars
 [exec] # Again, you don't need to copy all config sections to your config.
@@ -100,8 +100,8 @@ PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
 
 # You can uncomment this line to open up terminal with cmd + enter shortcut
 # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
-ctrl-enter = 'exec-and-forget wezterm start'
-ctrl-shift-enter = 'exec-and-forget sketchybar --reload'
+ctrl-enter = 'exec-and-forget open -n /Applications/WezTerm.app'
+#ctrl-shift-enter = 'exec-and-forget sketchybar --reload'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 ctrl-slash = 'layout accordion horizontal vertical'
@@ -256,10 +256,5 @@ run = 'move-node-to-workspace --focus-follows-window 3'
 
 
 [workspace-to-monitor-force-assignment]
-1 = 2
-# 2 = 2
+1 = 'secondary'
 3 = 2
-# 4 = 1
-# 5 = 1
-# 6 = 1
-# 7 = 1
